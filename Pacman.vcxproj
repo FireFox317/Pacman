@@ -128,19 +128,29 @@
     <None Include="include\board.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Dot.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MovingObject.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\UI.cpp" />
+    <ClCompile Include="Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dot.h" />
     <ClInclude Include="include\example.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObjectStruct.h" />
     <ClInclude Include="include\UI.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MovingObject.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Pacman.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="Stats.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

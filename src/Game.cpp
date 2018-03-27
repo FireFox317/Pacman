@@ -1,7 +1,13 @@
 #include "Game.h"
 
-Game::Game(std::vector<std::vector<int>> map) : map(map)
+#include "../Dot.h"
+
+Game::Game(std::vector<std::vector<int>> _map)
 {
+	map.init(_map);
+	Position pos(1, 1);
+	pacman = new Pacman(pos, map);
+	listOfObjects.push_back(pacman);
 }
 
 Game::~Game()
@@ -10,53 +16,48 @@ Game::~Game()
 
 void Game::init()
 {
-	pacman.x = 1;
-	pacman.y = 1;
-	pacman.type = PACMAN;
-	pacman.dir = UP;
-
-	for (size_t y = 0; y < map.size(); y++) {
-		for (size_t x = 0; x < map[y].size(); x++) {
-			if (map[y][x] == 0) {
-				GameObjectStruct dot;
-				dot.dir = UP;
-				dot.x = x;
-				dot.y = y;
-				dot.type = DOT;
+	for (size_t y = 0; y < map.getSizeY(); y++) {
+		for (size_t x = 0; x < map.getSizeX(); x++) {
+			Position pos(x, y);
+			if (map.checkPath(pos)) {
+				Dot* dot = new Dot(pos);
+				listOfObjects.push_back(dot);
 				listOfDots.push_back(dot);
 			}
 		}
 	}
+
+
+	stats = std::make_unique<Stats>(0, 3);
+
 }
 
 void Game::render()
 {
-	objects = { pacman };
-
-	for (unsigned int i = 0; i < listOfDots.size(); i++) {
-		GameObjectStruct dot = listOfDots[i];
-		if (dot.x == pacman.x && dot.y == pacman.y) {
-			listOfDots.erase(listOfDots.begin() + i);
-		}
+	objects = {};
+	for (auto object : listOfObjects) {
+		GameObjectStruct temp;
+		temp.x = object->getPosition().getX();
+		temp.y = object->getPosition().getY();
+		temp.dir = object->getDirection();
+		temp.type = object->getType();
+		objects.push_back(temp);
 	}
-	objects.insert(objects.end(), listOfDots.begin(), listOfDots.end());
 }
 
 void Game::update()
 {
-	if (countUpdates % 2 == 0) {
-		if (pacman.dir == LEFT && map[pacman.y][pacman.x-1] != 1 ) {
-			pacman.x--;
+	for (auto object : listOfObjects) {
+		if (object->getVelocity() != -1 && countUpdates % object->getVelocity() == 0) {
+			object->update();
 		}
-		else if (pacman.dir == RIGHT && map[pacman.y][pacman.x + 1] != 1) {
-			pacman.x++;
+	}
+	for (int i = 0; i < listOfDots.size(); i++) {
+		auto dot = listOfDots[i];
+		if (dot->getPosition() == pacman->getPosition()) {
+			listOfDots.erase(listOfDots.begin() + i);
 		}
-		else if (pacman.dir == UP && map[pacman.y-1][pacman.x] != 1) {
-			pacman.y--;
-		}
-		else if (pacman.dir == DOWN && map[pacman.y+1][pacman.x] != 1) {
-			pacman.y++;
-		}
+		break;
 	}
 
 	countUpdates++;
@@ -66,16 +67,16 @@ void Game::input(SDL_Keycode key)
 {
 	switch (key) {
 	case SDLK_LEFT: // YOUR CODE HERE
-		pacman.dir = LEFT;
+		pacman->setDirection(LEFT);
 		break;
 	case SDLK_RIGHT: // YOUR CODE HERE
-		pacman.dir = RIGHT;
+		pacman->setDirection(RIGHT);
 		break;
 	case SDLK_UP: // YOUR CODE HERE
-		pacman.dir = UP;
+		pacman->setDirection(UP);
 		break;
 	case SDLK_DOWN: // YOUR CODE HERE
-		pacman.dir = DOWN;
+		pacman->setDirection(DOWN);
 		break;
 	}
 }
@@ -85,12 +86,12 @@ std::vector<GameObjectStruct> Game::getStructs()
 	return objects;
 }
 
-unsigned int Game::getLives()
+int Game::getLives()
 {
-	return lives;
+	return stats->getLives();
 }
 
-unsigned int Game::getScore()
+int Game::getScore()
 {
-	return score;
+	return stats->getScore();
 }

@@ -4,11 +4,17 @@ Position::Position(int x, int y) : x(x), y(y)
 {
 }
 
-void Position::SetPosition(int _x, int _y)
+void Position::setX(int _x)
 {
 	x = _x;
+}
+
+
+void Position::setY(int _y)
+{
 	y = _y;
 }
+
 
 int Position::getX()
 {
@@ -18,4 +24,9 @@ int Position::getX()
 int Position::getY()
 {
 	return y;
+}
+
+bool Position::operator==(const Position & pos)
+{
+	return (this->x == pos.x && this->y == pos.y);
 }

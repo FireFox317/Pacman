@@ -3,6 +3,12 @@
 #include "GameObjectStruct.h"
 #include <SDL2/SDL.h>
 #include <vector>
+#include <memory>
+#include "../Stats.h"
+#include "../Pacman.h"
+#include "../Object.h"
+#include "../Map.h"
+#include "../Dot.h"
 
 class Game
 {
@@ -15,14 +21,17 @@ public:
 	void input(SDL_Keycode key);
 
 	std::vector<GameObjectStruct> getStructs();
-	unsigned int getLives();
-	unsigned int getScore();
+	int getLives();
+	int getScore();
 private:
-	GameObjectStruct pacman;
-	std::vector<GameObjectStruct> listOfDots;
+	std::unique_ptr<Stats> stats;
+
+	std::vector<Object*> listOfObjects;
+
+	std::vector<Dot*> listOfDots;
+	Pacman* pacman;
+
+	Map map;
 	std::vector<GameObjectStruct> objects;
-	std::vector<std::vector<int>> map;
 	unsigned int countUpdates = 0;
-	unsigned int lives = 3;
-	unsigned int score = 0;
 };
