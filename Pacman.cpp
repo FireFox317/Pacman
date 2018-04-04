@@ -2,11 +2,12 @@
 
 
 
-Pacman::Pacman(Position initialPostion, Map _map) {
-	currentPosition = initialPostion;
+Pacman::Pacman(Position _initialPosition, Map _map) {
+	currentPosition = _initialPosition;
+	initialPosition = _initialPosition;
 	sprite = PACMAN;
 	direction = UP;
-	velocity = 2;
+	velocity = 10;
 	map = _map;
 }
 

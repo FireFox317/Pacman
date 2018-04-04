@@ -14,9 +14,11 @@ public:
 	int getVelocity();
 	Direction getDirection();
 	void setDirection(Direction dir);
+	void reset();
 protected:
 	Direction direction;
 	int velocity;
 	Map map;
+	Position initialPosition;
 };
 

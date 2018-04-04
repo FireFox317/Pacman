@@ -1,12 +1,15 @@
 #include "Game.h"
 
 #include "../Dot.h"
+#include "../Ghost.h"
+#include "../Pacman.h"
+#include "../Energizer.h"
 #include <iostream>
 
 Game::Game(std::vector<std::vector<int>> _map)
 {
 	map.init(_map);
-	Position pos(1, 1);
+	Position pos(6, 13);
 	listOfObjects.push_back(std::unique_ptr<Pacman>(new Pacman(pos, map)));
 }
 
@@ -16,6 +19,9 @@ Game::~Game()
 
 void Game::init()
 {
+	stats.init(0, 3);
+
+	// adding dots to the game
 	for (size_t y = 0; y < map.getSizeY(); y++) {
 		for (size_t x = 0; x < map.getSizeX(); x++) {
 			Position pos(x, y);
@@ -25,7 +31,16 @@ void Game::init()
 		}
 	}
 
-	stats.init(0, 3);
+	listOfObjects.push_back(std::unique_ptr<Ghost>(new Ghost(Position(13,13), map, PINKY)));
+	listOfObjects.push_back(std::unique_ptr<Ghost>(new Ghost(Position(14,13), map, BLINKY)));
+	listOfObjects.push_back(std::unique_ptr<Ghost>(new Ghost(Position(13, 14), map, INKY)));
+	listOfObjects.push_back(std::unique_ptr<Ghost>(new Ghost(Position(14, 14), map, CLYDE)));
+
+	listOfObjects.push_back(std::unique_ptr<Energizer>(new Energizer(Position(1, 1))));
+	listOfObjects.push_back(std::unique_ptr<Energizer>(new Energizer(Position(26, 1))));
+	listOfObjects.push_back(std::unique_ptr<Energizer>(new Energizer(Position(1, 25))));
+	listOfObjects.push_back(std::unique_ptr<Energizer>(new Energizer(Position(26,25))));
+	
 }
 
 void Game::render()
@@ -53,10 +68,16 @@ void Game::move() {
 		if (mo != nullptr) {
 			if (countUpdates % mo->getVelocity() == 0) {
 				object->update();
+				Ghost* ghost = dynamic_cast<Ghost*>(object.get());
+				if (ghost != nullptr) {
+					ghost->moveRandom();
+				}
 			}
 		}
 	}
 	countUpdates++;
+
+
 }
 
 void Game::update()
@@ -73,6 +94,48 @@ void Game::update()
 			}
 		}
 	}
+
+	for (int i = 1; i < listOfObjects.size(); i++) {
+		Ghost* ghost = dynamic_cast<Ghost*>(listOfObjects[i].get());
+		if (ghost != nullptr) {
+			if (ghost->getPosition() == pacman->getPosition()) {
+				if (ghost->getScared() == true) {
+					stats.changeScore(pointsForEatingGhost);
+					listOfObjects.erase(listOfObjects.begin() + i);
+					pointsForEatingGhost = pointsForEatingGhost * 2;
+				}
+				else {
+					stats.changeLives(-1);
+					for (auto& object : listOfObjects) {
+						MovingObject* mo = dynamic_cast<MovingObject*>(object.get());
+						if (mo != nullptr) {
+							mo->reset();
+						}
+					}
+				}
+
+				break;
+			}
+		}
+	}
+
+	for (int i = 1; i < listOfObjects.size(); i++) {
+		Energizer* energizer = dynamic_cast<Energizer*>(listOfObjects[i].get());
+		if (energizer != nullptr) {
+			if (energizer->getPosition() == pacman->getPosition()) {
+				stats.changeScore(energizer->getScore());
+				listOfObjects.erase(listOfObjects.begin() + i);
+				for (auto& object : listOfObjects) {
+					Ghost* ghost = dynamic_cast<Ghost*>(object.get());
+					if (ghost != nullptr) {
+						ghost->setScared(true);
+					}
+				}
+				break;
+			}
+		}
+	}
+
 }
 
 void Game::input(SDL_Keycode key)

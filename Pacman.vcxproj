@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dot.cpp" />
+    <ClCompile Include="Energizer.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MovingObject.cpp" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dot.h" />
+    <ClInclude Include="Energizer.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="include\example.h" />
     <ClInclude Include="include\Game.h" />

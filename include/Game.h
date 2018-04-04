@@ -32,4 +32,6 @@ private:
 	Map map;
 	std::vector<GameObjectStruct> objects;
 	unsigned int countUpdates = 0;
+
+	int pointsForEatingGhost = 200;
 };
