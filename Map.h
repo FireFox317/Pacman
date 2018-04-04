@@ -13,6 +13,7 @@ public:
 	size_t getSizeX();
 	size_t getSizeY();
 	bool checkPath(Position pos);
+	bool isOnEdge(Position pos, Direction dir);
 private:
 	std::vector<std::vector<int>> map;
 };

@@ -32,3 +32,13 @@ bool Map::checkPath(Position pos)
 {
 	return map[pos.getY()][pos.getX()] == 0;
 }
+
+bool Map::isOnEdge(Position pos, Direction dir)
+{
+	switch (dir) {
+	case LEFT: return pos.getX() == 0;
+	case RIGHT: return pos.getX() == getSizeX() - 1;
+	case UP: return pos.getY() == 0;
+	case DOWN: return pos.getY() == getSizeY() - 1;
+	}
+}

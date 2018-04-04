@@ -1,13 +1,13 @@
 #include "Game.h"
 
 #include "../Dot.h"
+#include <iostream>
 
 Game::Game(std::vector<std::vector<int>> _map)
 {
 	map.init(_map);
 	Position pos(1, 1);
-	pacman = new Pacman(pos, map);
-	listOfObjects.push_back(pacman);
+	listOfObjects.push_back(std::unique_ptr<Pacman>(new Pacman(pos, map)));
 }
 
 Game::~Game()
@@ -20,51 +20,64 @@ void Game::init()
 		for (size_t x = 0; x < map.getSizeX(); x++) {
 			Position pos(x, y);
 			if (map.checkPath(pos)) {
-				Dot* dot = new Dot(pos);
-				listOfObjects.push_back(dot);
-				listOfDots.push_back(dot);
+				listOfObjects.push_back(std::unique_ptr<Dot>(new Dot(pos)));
 			}
 		}
 	}
 
-
-	stats = std::make_unique<Stats>(0, 3);
-
+	stats.init(0, 3);
 }
 
 void Game::render()
 {
 	objects = {};
-	for (auto object : listOfObjects) {
+	for (auto& object : listOfObjects) {
 		GameObjectStruct temp;
 		temp.x = object->getPosition().getX();
 		temp.y = object->getPosition().getY();
-		temp.dir = object->getDirection();
+		MovingObject* mo = dynamic_cast<MovingObject*>(object.get());
+		if (mo == nullptr) {
+			temp.dir = UP;
+		}
+		else {
+			temp.dir = mo->getDirection();
+		}
 		temp.type = object->getType();
 		objects.push_back(temp);
 	}
 }
 
+void Game::move() {
+	for (auto& object : listOfObjects) {
+		MovingObject* mo = dynamic_cast<MovingObject*>(object.get());
+		if (mo != nullptr) {
+			if (countUpdates % mo->getVelocity() == 0) {
+				object->update();
+			}
+		}
+	}
+	countUpdates++;
+}
+
 void Game::update()
 {
-	for (auto object : listOfObjects) {
-		if (object->getVelocity() != -1 && countUpdates % object->getVelocity() == 0) {
-			object->update();
-		}
-	}
-	for (int i = 0; i < listOfDots.size(); i++) {
-		auto dot = listOfDots[i];
-		if (dot->getPosition() == pacman->getPosition()) {
-			listOfDots.erase(listOfDots.begin() + i);
-		}
-		break;
-	}
+	Pacman* pacman = dynamic_cast<Pacman*>(listOfObjects[0].get());
 
-	countUpdates++;
+	for (int i = 1; i < listOfObjects.size(); i++) {
+		Dot* dot = dynamic_cast<Dot*>(listOfObjects[i].get());
+		if (dot != nullptr) {
+			if (dot->getPosition() == pacman->getPosition()) {
+				stats.changeScore(dot->getScore());
+				listOfObjects.erase(listOfObjects.begin() + i);
+				break;
+			}
+		}
+	}
 }
 
 void Game::input(SDL_Keycode key)
 {
+	Pacman* pacman = dynamic_cast<Pacman*>(listOfObjects[0].get());
 	switch (key) {
 	case SDLK_LEFT: // YOUR CODE HERE
 		pacman->setDirection(LEFT);
@@ -88,10 +101,10 @@ std::vector<GameObjectStruct> Game::getStructs()
 
 int Game::getLives()
 {
-	return stats->getLives();
+	return stats.getLives();
 }
 
 int Game::getScore()
 {
-	return stats->getScore();
+	return stats.getScore();
 }

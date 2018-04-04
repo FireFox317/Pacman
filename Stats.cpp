@@ -1,7 +1,9 @@
 #include "Stats.h"
 
-Stats::Stats(int initialScore, int initialLives) : score(initialScore), lives(initialLives)
+void Stats::init(int initialScore, int initialLives)
 {
+	score = initialScore;
+	lives = initialLives;
 }
 
 void Stats::changeScore(int amount)

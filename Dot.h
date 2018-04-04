@@ -6,9 +6,9 @@ class Dot :
 public:
 	Dot(Position pos);
 	~Dot();
-	int getVelocity() override;
-	Direction getDirection() override;
+	int getScore();
 private:
 	void update() override;
+	int score = 10;
 };
 

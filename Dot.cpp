@@ -13,14 +13,9 @@ Dot::~Dot()
 {
 }
 
-int Dot::getVelocity()
+int Dot::getScore()
 {
-	return -1;
-}
-
-Direction Dot::getDirection()
-{
-	return UP;
+	return score;
 }
 
 void Dot::update()

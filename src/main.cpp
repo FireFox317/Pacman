@@ -15,7 +15,7 @@
 
 
 Uint32 updateTimer(Uint32 interval, void* param) {
-	static_cast<Game*>(param)->update();
+	static_cast<Game*>(param)->move();
 	return interval;
 }
 
@@ -67,7 +67,7 @@ int main(int /*argc*/, char ** /*argv*/)
         }
 
         // Set the score
-        
+		game.update();
 
         // Render the scene
 		game.render();

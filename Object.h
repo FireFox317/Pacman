@@ -11,8 +11,6 @@ public:
 	void virtual update() = 0;
 	Position getPosition();
 	Type getType();
-	int virtual getVelocity() = 0;
-	Direction virtual getDirection() = 0;
 protected:
 	Position currentPosition;
 	Type sprite;

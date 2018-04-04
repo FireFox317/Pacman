@@ -21,7 +21,9 @@ Direction MovingObject::getDirection()
 	return direction;
 }
 
+
 void MovingObject::setDirection(Direction dir)
 {
 	direction = dir;
 }
+

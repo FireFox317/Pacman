@@ -18,18 +18,16 @@ public:
 	void init();
 	void render();
 	void update();
+	void move();
 	void input(SDL_Keycode key);
 
 	std::vector<GameObjectStruct> getStructs();
 	int getLives();
 	int getScore();
 private:
-	std::unique_ptr<Stats> stats;
+	Stats stats;
 
-	std::vector<Object*> listOfObjects;
-
-	std::vector<Dot*> listOfDots;
-	Pacman* pacman;
+	std::vector<std::unique_ptr<Object>> listOfObjects;
 
 	Map map;
 	std::vector<GameObjectStruct> objects;

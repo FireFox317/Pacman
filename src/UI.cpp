@@ -118,10 +118,10 @@ void UI::loadMaps()
     const int size = 24;
     const int o = 4;
     std::map<Direction, SDL_Rect> pacman;
-    pacman[UP] = {o + size * 1, o + size * 11, size, size};
-    pacman[DOWN] = {o + size * 13, o + size * 7, size, size};
-    pacman[LEFT] = {o + size * 0, o + size * 11, size, size};
-    pacman[RIGHT] = {o + size * 12, o + size * 7, size, size};
+	pacman[UP] = { o + size * 1, o + size * 11, size, size };
+	pacman[DOWN] = { o + size * 13, o + size * 7, size, size };
+	pacman[LEFT] = { o + size * 0, o + size * 11, size, size };
+	pacman[RIGHT] = { o + size * 12, o + size * 7, size, size };
     clips[PACMAN] = pacman;
 
     std::map<Direction, SDL_Rect> pinky;

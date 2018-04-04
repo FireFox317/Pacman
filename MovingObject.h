@@ -11,8 +11,8 @@ class MovingObject :
 public:
 	MovingObject();
 	~MovingObject();
-	int getVelocity() override;
-	Direction getDirection() override;
+	int getVelocity();
+	Direction getDirection();
 	void setDirection(Direction dir);
 protected:
 	Direction direction;
