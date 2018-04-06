@@ -1,5 +1,4 @@
-#include "Dot.h"
-
+#include "Objects/StaticObjects/Dot.h"
 
 
 Dot::Dot(Position pos)

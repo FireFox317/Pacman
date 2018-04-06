@@ -1,14 +1,18 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
 
-#include "GameObjectStruct.h"
 #include <SDL2/SDL.h>
 #include <vector>
 #include <memory>
-#include "../Stats.h"
-#include "../Pacman.h"
-#include "../Object.h"
-#include "../Map.h"
-#include "../Dot.h"
+
+#include "GameObjectStruct.h"
+
+#include "Utils/Stats.h"
+#include "Objects/MovingObjects/Pacman.h"
+#include "Objects/Object.h"
+#include "Utils/Map.h"
+#include "Utils/CollisionDetector.h"
+#include "Objects/StaticObjects/Dot.h"
 
 class Game
 {
@@ -26,6 +30,7 @@ public:
 	int getScore();
 private:
 	Stats stats;
+	CollisionDetector collisionDetector;
 
 	std::vector<std::unique_ptr<Object>> listOfObjects;
 
@@ -34,4 +39,11 @@ private:
 	unsigned int countUpdates = 0;
 
 	int pointsForEatingGhost = 200;
+	bool fruitAdded = false;
+	int lowerBoundFruit = 500;
+	int fruitCount = 250;
 };
+
+#endif // !GAME_H
+
+

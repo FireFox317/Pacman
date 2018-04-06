@@ -29,38 +29,41 @@
     <ClCompile Include="src\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="src\CollisionDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Position.cpp">
+    <ClCompile Include="src\Dot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MovingObject.cpp">
+    <ClCompile Include="src\Energizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Pacman.cpp">
+    <ClCompile Include="src\Fruit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Stats.cpp">
+    <ClCompile Include="src\Ghost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
+    <ClCompile Include="src\Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dot.cpp">
+    <ClCompile Include="src\MovingObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ghost.cpp">
+    <ClCompile Include="src\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Energizer.cpp">
+    <ClCompile Include="src\Pacman.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Position.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Stats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\example.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\GameObjectStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -70,31 +73,37 @@
     <ClInclude Include="include\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
+    <ClInclude Include="include\Objects\MovingObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Position.h">
+    <ClInclude Include="include\Objects\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MovingObject.h">
+    <ClInclude Include="include\Utils\CollisionDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Pacman.h">
+    <ClInclude Include="include\Utils\Position.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Stats.h">
+    <ClInclude Include="include\Utils\Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
+    <ClInclude Include="include\Utils\Stats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Dot.h">
+    <ClInclude Include="include\Objects\MovingObjects\Ghost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ghost.h">
+    <ClInclude Include="include\Objects\MovingObjects\Pacman.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Energizer.h">
+    <ClInclude Include="include\Objects\StaticObjects\Dot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Objects\StaticObjects\Energizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Objects\StaticObjects\Fruit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

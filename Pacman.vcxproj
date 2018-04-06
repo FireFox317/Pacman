@@ -128,33 +128,36 @@
     <None Include="include\board.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Dot.cpp" />
-    <ClCompile Include="Energizer.cpp" />
-    <ClCompile Include="Ghost.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MovingObject.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Pacman.cpp" />
-    <ClCompile Include="Position.cpp" />
+    <ClCompile Include="src\CollisionDetector.cpp" />
+    <ClCompile Include="src\Dot.cpp" />
+    <ClCompile Include="src\Energizer.cpp" />
+    <ClCompile Include="src\Fruit.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Ghost.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\MovingObject.cpp" />
+    <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\Pacman.cpp" />
+    <ClCompile Include="src\Position.cpp" />
+    <ClCompile Include="src\Stats.cpp" />
     <ClCompile Include="src\UI.cpp" />
-    <ClCompile Include="Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dot.h" />
-    <ClInclude Include="Energizer.h" />
-    <ClInclude Include="Ghost.h" />
-    <ClInclude Include="include\example.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObjectStruct.h" />
+    <ClInclude Include="include\Objects\MovingObject.h" />
+    <ClInclude Include="include\Objects\MovingObjects\Ghost.h" />
+    <ClInclude Include="include\Objects\MovingObjects\Pacman.h" />
+    <ClInclude Include="include\Objects\Object.h" />
+    <ClInclude Include="include\Objects\StaticObjects\Dot.h" />
+    <ClInclude Include="include\Objects\StaticObjects\Energizer.h" />
+    <ClInclude Include="include\Objects\StaticObjects\Fruit.h" />
     <ClInclude Include="include\UI.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="MovingObject.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="Pacman.h" />
-    <ClInclude Include="Position.h" />
-    <ClInclude Include="Stats.h" />
+    <ClInclude Include="include\Utils\CollisionDetector.h" />
+    <ClInclude Include="include\Utils\Map.h" />
+    <ClInclude Include="include\Utils\Position.h" />
+    <ClInclude Include="include\Utils\Stats.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

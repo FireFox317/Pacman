@@ -1,5 +1,8 @@
-#pragma once
-#include "MovingObject.h"
+#ifndef PACMAN_H
+#define PACMAN_H
+
+#include "../MovingObject.h"
+
 class Pacman :
 	public MovingObject
 {
@@ -9,4 +12,8 @@ public:
 private:
 	void update() override;
 };
+
+#endif // !PACMAN_H
+
+
 

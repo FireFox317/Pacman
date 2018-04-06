@@ -1,4 +1,4 @@
-#include "Stats.h"
+#include "Utils/Stats.h"
 
 void Stats::init(int initialScore, int initialLives)
 {

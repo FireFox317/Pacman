@@ -1,7 +1,8 @@
-#pragma once
+#ifndef OBJECT_H
+#define OBJECT_H
 
-#include "Position.h"
-#include "include\GameObjectStruct.h"
+#include "../Utils/Position.h"
+#include "../GameObjectStruct.h"
 
 class Object
 {
@@ -15,4 +16,9 @@ protected:
 	Position currentPosition;
 	Type sprite;
 };
+
+
+#endif // !OBJECT_H
+
+
 

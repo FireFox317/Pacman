@@ -1,4 +1,4 @@
-#include "Pacman.h"
+#include "Objects/MovingObjects/Pacman.h"
 
 
 
@@ -7,8 +7,9 @@ Pacman::Pacman(Position _initialPosition, Map _map) {
 	initialPosition = _initialPosition;
 	sprite = PACMAN;
 	direction = UP;
-	velocity = 10;
+	velocity = 3;
 	map = _map;
+	updateCount = 0;
 }
 
 

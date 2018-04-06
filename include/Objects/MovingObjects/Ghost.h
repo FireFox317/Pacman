@@ -1,9 +1,13 @@
-#pragma once
-#include "MovingObject.h"
+#ifndef GHOST_H
+#define GHOST_H
+
+#include "../MovingObject.h"
+
 class Ghost :
 	public MovingObject
 {
 public:
+	Ghost() = default;
 	Ghost(Position initialPosition, Map map, Type type);
 	~Ghost();
 	void moveRandom();
@@ -15,4 +19,8 @@ private:
 	Type initialType;
 	int timeout;
 };
+
+
+
+#endif // !GHOST_H
 

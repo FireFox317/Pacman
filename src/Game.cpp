@@ -1,10 +1,13 @@
 #include "Game.h"
 
-#include "../Dot.h"
-#include "../Ghost.h"
-#include "../Pacman.h"
-#include "../Energizer.h"
-#include <iostream>
+#include <algorithm>
+#include <memory>
+#include <vector>
+
+#include "Objects/StaticObjects/Dot.h"
+#include "Objects/MovingObjects/Ghost.h"
+
+
 
 Game::Game(std::vector<std::vector<int>> _map)
 {
@@ -66,16 +69,17 @@ void Game::move() {
 	for (auto& object : listOfObjects) {
 		MovingObject* mo = dynamic_cast<MovingObject*>(object.get());
 		if (mo != nullptr) {
-			if (countUpdates % mo->getVelocity() == 0) {
+			if (mo->updateCount % mo->getVelocity() == 0) {
 				object->update();
 				Ghost* ghost = dynamic_cast<Ghost*>(object.get());
 				if (ghost != nullptr) {
 					ghost->moveRandom();
 				}
 			}
+			mo->updateCount++;
 		}
 	}
-	countUpdates++;
+	//countUpdates++;
 
 
 }
@@ -84,59 +88,52 @@ void Game::update()
 {
 	Pacman* pacman = dynamic_cast<Pacman*>(listOfObjects[0].get());
 
-	for (int i = 1; i < listOfObjects.size(); i++) {
-		Dot* dot = dynamic_cast<Dot*>(listOfObjects[i].get());
-		if (dot != nullptr) {
-			if (dot->getPosition() == pacman->getPosition()) {
-				stats.changeScore(dot->getScore());
-				listOfObjects.erase(listOfObjects.begin() + i);
-				break;
+	Dot dot;
+	if (collisionDetector.pacmanDotCollision(pacman, listOfObjects, dot)) {
+		stats.changeScore(dot.getScore());
+	}
+
+	Ghost ghost;
+	if (collisionDetector.pacmanGhostCollision(pacman, listOfObjects, ghost)) {
+		if (ghost.getScared() == true) {
+			stats.changeScore(pointsForEatingGhost);
+			pointsForEatingGhost = pointsForEatingGhost * 2;
+		}
+		else {
+			stats.changeLives(-1);
+			for (auto& object : listOfObjects) {
+				MovingObject* mo = dynamic_cast<MovingObject*>(object.get());
+				if (mo != nullptr) {
+					mo->reset();
+				}
 			}
 		}
 	}
 
-	for (int i = 1; i < listOfObjects.size(); i++) {
-		Ghost* ghost = dynamic_cast<Ghost*>(listOfObjects[i].get());
-		if (ghost != nullptr) {
-			if (ghost->getPosition() == pacman->getPosition()) {
-				if (ghost->getScared() == true) {
-					stats.changeScore(pointsForEatingGhost);
-					listOfObjects.erase(listOfObjects.begin() + i);
-					pointsForEatingGhost = pointsForEatingGhost * 2;
-				}
-				else {
-					stats.changeLives(-1);
-					for (auto& object : listOfObjects) {
-						MovingObject* mo = dynamic_cast<MovingObject*>(object.get());
-						if (mo != nullptr) {
-							mo->reset();
-						}
-					}
-				}
-
-				break;
+	Energizer energizer;
+	if (collisionDetector.pacmanEnergizerCollision(pacman, listOfObjects, energizer)) {
+		stats.changeScore(energizer.getScore());
+		for (auto& object : listOfObjects) {
+			Ghost* ghost = dynamic_cast<Ghost*>(object.get());
+			if (ghost != nullptr) {
+				ghost->setScared(true);
 			}
 		}
 	}
 
-	for (int i = 1; i < listOfObjects.size(); i++) {
-		Energizer* energizer = dynamic_cast<Energizer*>(listOfObjects[i].get());
-		if (energizer != nullptr) {
-			if (energizer->getPosition() == pacman->getPosition()) {
-				stats.changeScore(energizer->getScore());
-				listOfObjects.erase(listOfObjects.begin() + i);
-				for (auto& object : listOfObjects) {
-					Ghost* ghost = dynamic_cast<Ghost*>(object.get());
-					if (ghost != nullptr) {
-						ghost->setScared(true);
-					}
-				}
-				break;
-			}
-		}
+	Fruit fruit;
+	if (collisionDetector.pacmanFruitCollision(pacman, listOfObjects, fruit)) {
+		stats.changeScore(fruit.getScore());
 	}
 
+	if (stats.getScore() > lowerBoundFruit) {
+		listOfObjects.push_back(std::unique_ptr<Fruit>(new Fruit(map.calculateRandomPosition())));
+		fruitCount *= 2;
+		lowerBoundFruit += fruitCount;
+	}
+	
 }
+
 
 void Game::input(SDL_Keycode key)
 {

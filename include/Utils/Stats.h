@@ -1,4 +1,6 @@
-#pragma once
+#ifndef STATS_H
+#define STATS_H
+
 class Stats
 {
 public:
@@ -11,4 +13,9 @@ public:
 private:
 	int score, lives;
 };
+
+#endif // !STATS_H
+
+
+
 

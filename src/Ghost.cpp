@@ -1,4 +1,4 @@
-#include "Ghost.h"
+#include "Objects/MovingObjects/Ghost.h"
 
 #include <random>
 #include <algorithm>
@@ -11,8 +11,9 @@ Ghost::Ghost(Position _initialPosition, Map _map, Type type)
 	sprite = type;
 	initialType = type;
 	direction = UP;
-	velocity = 11;
+	velocity = 3;
 	map = _map;
+	updateCount = 2;
 }
 
 
@@ -167,7 +168,7 @@ void Ghost::update()
 
 	if (scared) {
 		sprite = SCARED;
-		velocity = 15;
+		velocity = 4;
 		timeout++;
 		if (timeout == 50) {
 			scared = false;
@@ -176,6 +177,6 @@ void Ghost::update()
 	else {
 		sprite = initialType;
 		timeout = 0;
-		velocity = 11;
+		velocity = 3;
 	}
 }

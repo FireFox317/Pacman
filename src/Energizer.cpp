@@ -1,6 +1,4 @@
-#include "Energizer.h"
-
-
+#include "Objects/StaticObjects/Energizer.h"
 
 Energizer::Energizer(Position pos)
 {

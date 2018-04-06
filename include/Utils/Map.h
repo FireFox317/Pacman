@@ -1,8 +1,9 @@
-#pragma once
+#ifndef MAP_H
+#define MAP_H
 
 #include <vector>
 #include "Position.h"
-#include "include\GameObjectStruct.h"
+#include "../GameObjectStruct.h"
 
 class Map
 {
@@ -14,7 +15,12 @@ public:
 	size_t getSizeY();
 	bool checkPath(Position pos);
 	bool isOnEdge(Position pos, Direction dir);
+	Position calculateRandomPosition();
 private:
 	std::vector<std::vector<int>> map;
 };
+
+#endif // !MAP_H
+
+
 
